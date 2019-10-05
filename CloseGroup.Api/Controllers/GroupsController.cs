@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace CloseGroup.Api.Controllers
 {
@@ -17,11 +13,10 @@ namespace CloseGroup.Api.Controllers
             this.closeGroupSvc = closeGroupSvc;
         }
 
-        // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return closeGroupSvc.GroupsInfo();
         }
 
         [HttpGet("{productName}")]
@@ -30,22 +25,11 @@ namespace CloseGroup.Api.Controllers
             return closeGroupSvc.CloseGroupFor(productName);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("analyze")]
+        public ActionResult<string> Analyze()
         {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            closeGroupSvc.AnalyzeGroups();
+            return closeGroupSvc.GroupsInfo();
         }
     }
 }

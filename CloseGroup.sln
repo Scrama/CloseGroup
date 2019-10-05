@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloseGroup.Api", "CloseGroup.Api\CloseGroup.Api.csproj", "{B2A8C227-049E-43F1-8E41-4901AA80F876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloseGroup.Api", "CloseGroup.Api\CloseGroup.Api.csproj", "{B2A8C227-049E-43F1-8E41-4901AA80F876}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloseGroup", "CloseGroup\CloseGroup.csproj", "{8311AE9C-DD74-4594-97EC-E6483B04AFAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloseGroup", "CloseGroup\CloseGroup.csproj", "{8311AE9C-DD74-4594-97EC-E6483B04AFAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

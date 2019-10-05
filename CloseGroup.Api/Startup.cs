@@ -22,6 +22,8 @@ namespace CloseGroup.Api
 
             services.AddSingleton<ISettings, Settings>();
             services.AddSingleton<IRepo, Repo>();
+            services.AddSingleton<IProductNameProcessor, ProductNameProcessor>();
+            services.AddSingleton<IKeyWordAnalyzer, KeyWordAnalyzer>();
             services.AddSingleton<ICloseGroupService, CloseGroupService>();
         }
 

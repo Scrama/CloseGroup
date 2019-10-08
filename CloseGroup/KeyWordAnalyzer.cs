@@ -25,12 +25,13 @@ namespace CloseGroup
         public void Analyze(bool forced)
         {
             var analyzed = false;
-            foreach (var group in repo.List())
+            var groups = repo.List();
+            foreach (var group in groups)
             {
                 if (!forced && group.KeyWords != null && group.KeyWords.Any())
                     continue;
 
-                AnalyzeGroup(group);
+                AnalyzeGroup(group, groups);
                 analyzed = true;
             }
 
@@ -38,16 +39,47 @@ namespace CloseGroup
                 repo.WriteDown();
         }
 
-        private void AnalyzeGroup(Group group)
+        private void AnalyzeGroup(Group group, IList<Group> groups)
         {
             var map = new Dictionary<string, int>();
             foreach (var product in group.Products)
                 AnalyzeProduct(map, product);
 
             group.KeyWords = map
-                .Where(x =>x.Value > 1)
-                .Select(x => new KeyWord {Token = x.Key, Weight = x.Value})
+                .Where(x => x.Value > 1)
+                .Select(x => new KeyWord {Token = x.Key, Weight = NormalizeWeignt(x.Value, group.Products.Count)})
                 .ToList();
+
+            foreach (var otherGroup in groups)
+            {
+                if (otherGroup.Name == group.Name)
+                    return;
+
+                var otherWords = otherGroup.KeyWords.ToList();
+
+                foreach (var word in otherWords)
+                {
+                    var keyWord = group.KeyWords.FirstOrDefault(x => x.Token == word.Token);
+                    if (keyWord == null)
+                        continue;
+
+                    if (keyWord.Weight > word.Weight)
+                    {
+                        keyWord.Weight -= word.Weight;
+                        otherGroup.KeyWords.Remove(word);
+                    }
+                    else if (keyWord.Weight < word.Weight)
+                    {
+                        word.Weight -= keyWord.Weight;
+                        group.KeyWords.Remove(word);
+                    }
+                    else
+                    {
+                        otherGroup.KeyWords.Remove(word);
+                        group.KeyWords.Remove(word);
+                    }
+                }
+            }
         }
 
         private void AnalyzeProduct(Dictionary<string, int> map, string product)
@@ -75,6 +107,11 @@ namespace CloseGroup
 
                 map[word] = 1;
             }
+        }
+
+        private static int NormalizeWeignt(int wordCount, int productCount)
+        {
+            return 100 * wordCount / productCount;
         }
     }
 }

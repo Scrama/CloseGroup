@@ -6,8 +6,22 @@ namespace CloseGroup
 {
     public interface ICloseGroupService
     {
+        /// <summary>
+        /// Поиск ближайшей группы по названию продукта
+        /// </summary>
+        /// <param name="productName">продукт</param>
+        /// <returns>имя группы</returns>
         string CloseGroupFor(string productName);
+        
+        /// <summary>
+        /// Анализ групп для выявления ключевых слов
+        /// </summary>
         void AnalyzeGroups();
+
+        /// <summary>
+        /// Информация о группах
+        /// </summary>
+        /// <returns>текст</returns>
         string GroupsInfo();
     }
 

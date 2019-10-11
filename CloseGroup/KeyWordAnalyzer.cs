@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace CloseGroup
 {
+    /// <summary>
+    /// Анализ групп
+    /// </summary>
     public interface IKeyWordAnalyzer
     {
         void Analyze(bool forced);
@@ -50,6 +53,7 @@ namespace CloseGroup
                 .Select(x => new KeyWord {Token = x.Key, Weight = NormalizeWeignt(x.Value, group.Products.Count)})
                 .ToList();
 
+            // сравнение со словами в дургих гурппах
             foreach (var otherGroup in groups)
             {
                 if (otherGroup.Name == group.Name)
@@ -63,6 +67,7 @@ namespace CloseGroup
                     if (keyWord == null)
                         continue;
 
+                    // при совпадении уменьшить вес или удалить
                     if (keyWord.Weight > word.Weight)
                     {
                         keyWord.Weight -= word.Weight;
